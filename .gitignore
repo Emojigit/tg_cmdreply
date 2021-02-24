@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+cmds.json
+token.txt
+logc.txt
