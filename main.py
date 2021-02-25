@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, re, logging, requests, json, emoji, traceback
+import sys, re, logging, requests, json, traceback
 exit = sys.exit
 from telegram.ext import Updater, MessageHandler, CommandHandler, CallbackContext
 from telegram.ext.filters import Filters
@@ -84,6 +84,7 @@ def main():
     FCL.insert(-1,"help")
     FCL.insert(-1,"ping")
     FCL.insert(-1,"start")
+    FCL.sort()
     dp.add_handler(CommandHandler("help", GetCMDCallBack("help","I have these commands: {}\n{}".format("/" + " /".join(map(str, FCL)),helptxt),loc,bot)))
     log.info("Finally i registered these commands: {}".format(str(FCL)))
     updater.start_polling()
