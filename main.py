@@ -50,6 +50,17 @@ def GetCMDCallBack(cname,rcont,loc,bot):
 
 helptxt = "Source code: https://github\.com/Emojigit/tg\_cmdreply\nLicense: GPLv3"
 
+def GetNJCallBack(loc,bot):
+    def new_join(update: Update, context: CallbackContext):
+        uname = bot.get_me().username
+        for member in update.message.new_chat_members:
+            if member.username == uname:
+                update.message.reply_text(starttxt(),parse_mode=ParseMode.MARKDOWN_V2)
+                bot.send_message(loc,disable_notification=True, text="Type: Join Group Log\nGroup ID: {}".format(update.message.chat_id))
+    return new_join
+
+
+
 def main():
     tok = token()
     if tok == "":
@@ -87,6 +98,7 @@ def main():
     FCL.sort()
     dp.add_handler(CommandHandler("help", GetCMDCallBack("help","I have these commands: {}\n{}".format("/" + " /".join(map(str, FCL)),helptxt),loc,bot)))
     log.info("Finally i registered these commands: {}".format(str(FCL)))
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, GetNJCallBack(loc,bot)))
     updater.start_polling()
     log.info("Started the bot! Use Ctrl-C to stop it.")
     updater.idle()
